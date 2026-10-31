@@ -1,0 +1,2 @@
+/* SevaPath — keep App-level styles minimal; theme lives in index.css */
+.App { min-height: 100dvh; display: flex; flex-direction: column; }

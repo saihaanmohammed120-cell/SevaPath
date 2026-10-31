@@ -1,0 +1,116 @@
+{
+  "project_name": "SevaPath",
+  "theme": "light_dark_system_toggle",
+  "typography": {
+    "headings": "Chivo, sans-serif",
+    "body": "IBM Plex Sans, sans-serif",
+    "import_url": "https://fonts.googleapis.com/css2?family=Chivo:wght@300;400;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap",
+    "hierarchy": {
+      "h1": "text-4xl sm:text-5xl font-bold tracking-tight text-stone-900 dark:text-stone-100",
+      "h2": "text-2xl sm:text-3xl font-semibold text-stone-800 dark:text-stone-200",
+      "body": "text-base leading-relaxed text-stone-700 dark:text-stone-300"
+    }
+  },
+  "colors": {
+    "light": {
+      "background": "#FAFAF9",
+      "surface": "#FFFFFF",
+      "primary": "#C05621",
+      "primary_hover": "#9C4221",
+      "text_main": "#1C1917",
+      "text_muted": "#57534E",
+      "border": "#E7E5E4"
+    },
+    "dark": {
+      "background": "#1C1917",
+      "surface": "#292524",
+      "primary": "#D97743",
+      "primary_hover": "#C05621",
+      "text_main": "#FAFAF9",
+      "text_muted": "#A8A29E",
+      "border": "#44403C"
+    },
+    "trust_badges": {
+      "verified": "bg-green-50 text-green-800 border border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-800",
+      "ai_guidance": "bg-slate-50 text-slate-700 border border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700",
+      "not_verified": "bg-amber-50 text-amber-800 border border-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-800"
+    }
+  },
+  "visual_enhancers": {
+    "shadows": "Restrained, crisp shadows. Use shadow-sm for cards, shadow-md for floating panels.",
+    "borders": "1px solid #E7E5E4 (light) or #44403C (dark) for clear separation. No muddy glassmorphism.",
+    "radii": "rounded-lg for standard components, rounded-full for badges and pills.",
+    "surfaces": "Use flat solid surfaces. Avoid glassmorphism to maintain maximum clarity and trust."
+  },
+  "components": {
+    "hero_input": {
+      "description": "Goal-first large input field with voice mic button, text submit, and an 'I'm not sure' secondary CTA.",
+      "layout": "Left-aligned, max-w-2xl, prominent elevation."
+    },
+    "journey_tracker": {
+      "description": "Deterministic 6-stage timeline (Understand \u2192 Confirm \u2192 Eligibility \u2192 Documents \u2192 Procedure \u2192 Application).",
+      "states": {
+        "completed": "\u2713 (Check icon), primary color text",
+        "active": "\u25cf (Solid Dot), primary color, font-bold",
+        "upcoming": "\u25cb (Hollow Circle), text-muted"
+      }
+    },
+    "copilot_panel": {
+      "description": "Global chat interface handling intent, retrieval, clarification, and guidance.",
+      "layout": "Fixed side panel or floating dock (w-80/96, h-[calc(100vh-4rem)]), solid background (no transparent overlays)."
+    },
+    "document_upload": {
+      "description": "Drag-and-drop zone integrated into the Documents stage.",
+      "styling": "border-2 border-dashed border-stone-300 dark:border-stone-600 rounded-xl p-8 text-center bg-stone-50 dark:bg-stone-800/50",
+      "features": "File preview cards with clear 'Remove' and 'Replace' actions."
+    },
+    "life_situation_cards": {
+      "description": "Discovery cards (Starting college, Turning 18, Moving house, etc.)",
+      "layout": "Bento-style grid-cols-2 md:grid-cols-4, hover:-translate-y-1 transition-transform."
+    },
+    "header": {
+      "features": "Solid background, Logo, MySevaPath link, Compact language switcher (EN/HI/TA), Settings trigger.",
+      "styling": "sticky top-0 z-50 bg-background border-b border-border"
+    },
+    "badges": {
+      "description": "Trust badges and application mode badges (online/offline/hybrid/unavailable) with 'Why am I seeing this?' tooltips."
+    }
+  },
+  "layouts": {
+    "general": "Mobile-first, standard header + main + footer. Main content should have generous padding (p-6 to p-12).",
+    "hero": "Asymmetric left-aligned content. Avoid generic centered text."
+  },
+  "motion": {
+    "general": "Professional and restrained. 200ms ease-out for hover states.",
+    "reduce_motion": "Respect user settings from the Settings page (toggle for reduced motion).",
+    "voice_states": "idle (mic icon) / listening (subtle pulse) / processing (spinner) / error / unsupported."
+  },
+  "accessibility": {
+    "touch_targets": "Minimum 44px (min-h-[44px] or h-12) for all interactive elements.",
+    "testing": "All interactive and key informational elements MUST have data-testid attributes.",
+    "contrast": "Ensure APCA/WCAG 2.1 AA compliance for text on backgrounds."
+  },
+  "media": {
+    "hero_background": "https://images.unsplash.com/photo-1628965882741-570e75becd5d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2ODl8MHwxfHNlYXJjaHwzfHxjYWxtJTIwbWluaW1hbCUyMGFic3RyYWN0JTIwdGV4dHVyZSUyMHdhcm18ZW58MHx8fHwxNzg4MTY5NTkyfDA&ixlib=rb-4.1.0&q=85",
+    "secondary_abstract": "https://images.unsplash.com/photo-1651776493054-083b8f14a930?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2ODl8MHwxfHNlYXJjaHwxfHxjYWxtJTIwbWluaW1hbCUyMGFic3RyYWN0JTIwdGV4dHVyZSUyMHdhcm18ZW58MHx8fHwxNzg4MTY5NTkyfDA&ixlib=rb-4.1.0&q=85",
+    "guidance": "Use calm, minimal abstract textures for background enhancements to convey a modern, humane SaaS feel without resorting to cliché stock photos."
+  },
+  "instructions_to_main_agent": [
+    "Use standard React (.js/.jsx) files, not TypeScript.",
+    "Implement global font imports (Chivo and IBM Plex Sans) in index.css.",
+    "Do NOT use generic templates or pure Tailwind default colors (like blue-500). Use the defined custom colors (Terracotta primary, Stone/Sand neutral base) for a 'human but official' vibe.",
+    "Always apply 'data-testid' to buttons, inputs, and clickable cards using kebab-case role-based names (e.g., data-testid='voice-input-btn').",
+    "Ensure the Header has a solid background (no transparent headers) to maintain legibility when scrolling.",
+    "Implement the Settings page with functional context/state for Text Size (scaling rem units), Reduce Motion, and Theme.",
+    "Use lucide-react for standard icons.",
+    "Avoid glassmorphism; use solid background colors for dropdowns and floating elements to maximize trust and accessibility."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "Avoid generic centered layouts and simplistic gradients.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "NEVER use AI assistant Emoji characters (🤖🧠💭💡) for icons.",
+    "Every interaction needs micro-animations (unless reduce motion is enabled) - hover states, transitions, entrance animations.",
+    "Ensure dynamic component scaling based on the user's text size preference."
+  ]
+}

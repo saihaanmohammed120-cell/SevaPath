@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Chivo:wght@300;400;500;700;900&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 60 9% 98%;          /* #FAFAF9 stone-50 */
+    --foreground: 24 10% 10%;         /* #1C1917 stone-900 */
+    --card: 0 0% 100%;
+    --card-foreground: 24 10% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 24 10% 10%;
+    --primary: 19 74% 44%;            /* terracotta #C05621 */
+    --primary-foreground: 60 9% 98%;
+    --secondary: 60 5% 96%;
+    --secondary-foreground: 24 10% 10%;
+    --muted: 60 5% 96%;
+    --muted-foreground: 25 5% 35%;    /* stone-600 */
+    --accent: 24 63% 91%;             /* soft terracotta wash */
+    --accent-foreground: 19 74% 30%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 60 9% 98%;
+    --border: 20 6% 90%;              /* stone-200 */
+    --input: 20 6% 90%;
+    --ring: 19 74% 44%;
+    --radius: 0.625rem;
+
+    /* SevaPath brand tokens */
+    --sp-terracotta: 19 74% 44%;
+    --sp-terracotta-deep: 15 68% 37%;
+    --sp-sand: 40 33% 94%;
+    --sp-ink: 24 10% 10%;
+
+    /* Text-size scaling (Settings page) */
+    --sp-font-scale: 1;
+  }
+
+  .dark {
+    --background: 24 10% 10%;
+    --foreground: 60 9% 98%;
+    --card: 22 9% 15%;
+    --card-foreground: 60 9% 98%;
+    --popover: 22 9% 15%;
+    --popover-foreground: 60 9% 98%;
+    --primary: 20 66% 55%;
+    --primary-foreground: 24 10% 10%;
+    --secondary: 22 9% 18%;
+    --secondary-foreground: 60 9% 98%;
+    --muted: 22 9% 18%;
+    --muted-foreground: 30 6% 66%;
+    --accent: 22 9% 22%;
+    --accent-foreground: 60 9% 98%;
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 60 9% 98%;
+    --border: 20 6% 28%;
+    --input: 20 6% 28%;
+    --ring: 20 66% 55%;
+
+    --sp-terracotta: 20 66% 55%;
+    --sp-terracotta-deep: 19 74% 44%;
+    --sp-sand: 22 9% 18%;
+    --sp-ink: 60 9% 98%;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  html {
+    font-size: calc(16px * var(--sp-font-scale));
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4, h5, h6, .font-display {
+    font-family: 'Chivo', 'IBM Plex Sans', system-ui, sans-serif;
+    letter-spacing: -0.01em;
+  }
+  ::selection {
+    background: hsl(var(--sp-terracotta) / 0.25);
+    color: hsl(var(--sp-ink));
+  }
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+/* Reduced motion */
+.sp-reduce-motion *,
+.sp-reduce-motion *::before,
+.sp-reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Subtle grain (very restrained) */
+.sp-grain {
+  position: relative;
+}
+.sp-grain::after {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(hsl(var(--foreground) / 0.035) 1px, transparent 1px);
+  background-size: 3px 3px;
+  mix-blend-mode: multiply;
+  opacity: 0.4;
+}
+
+/* Voice mic listening pulse */
+@keyframes sp-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--primary) / 0.35); }
+  50%      { box-shadow: 0 0 0 12px hsl(var(--primary) / 0); }
+}
+.sp-listening { animation: sp-pulse 1.6s ease-out infinite; }
+
+/* Journey stage line */
+.sp-stage-line {
+  background: linear-gradient(to bottom, hsl(var(--border)) 0%, hsl(var(--border)) 100%);
+}
+
+/* Skip link */
+.sp-skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 100;
+  background: hsl(var(--primary)); color: hsl(var(--primary-foreground));
+  padding: 8px 12px; border-radius: 6px; font-weight: 600;
+}
+.sp-skip-link:focus { left: 8px; top: 8px; }

@@ -1,0 +1,15 @@
+{
+  "name": "sevapath-qa",
+  "version": "1.0.0",
+  "scripts": {
+    "test:smoke": "playwright test tests/smoke.spec.js --project=firefox",
+    "test:services": "playwright test tests/services.spec.js --project=firefox",
+    "test:eligibility": "playwright test tests/eligibility.spec.js --project=firefox",
+    "test:ui": "playwright test tests/localization.spec.js tests/ui.spec.js --project=firefox",
+    "test:resilience": "playwright test tests/resilience.spec.js tests/navigation.spec.js --project=firefox",
+    "test:all": "playwright test --project=firefox"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0"
+  }
+}

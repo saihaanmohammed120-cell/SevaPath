@@ -1,0 +1,12 @@
+{
+  "short_name": "SevaPath",
+  "name": "SevaPath — a calm guide through public services",
+  "description": "Tell SevaPath what you're trying to get done. SevaPath is a guide, not a government entity.",
+  "icons": [],
+  "start_url": "./",
+  "display": "standalone",
+  "theme_color": "#C05621",
+  "background_color": "#FAFAF9",
+  "lang": "en",
+  "scope": "./"
+}
