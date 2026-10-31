@@ -2,6 +2,9 @@
 
 SevaPath is a modern web application designed to guide citizens through government services. It consists of a React frontend and a FastAPI backend.
 
+![SevaPath homepage](demo.png)
+**[Live demo](https://sevapath.vercel.app/)**
+
 ## Production Deployment Architecture
 
 SevaPath supports deployment with separate origins for the frontend (e.g. Vercel) and the backend (e.g. Render). Because the frontend and backend live on different domains in production, specific environment variables are REQUIRED for them to communicate securely.
