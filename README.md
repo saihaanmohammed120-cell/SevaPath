@@ -1,9 +1,26 @@
-# SevaPath Civic Services Guide
+# SevaPath — Civic Services Guide
 
-SevaPath is a modern web application designed to guide citizens through government services. It consists of a React frontend and a FastAPI backend.
+SevaPath is a full-stack civic services guide for India. It walks citizens through 11 government services — Aadhaar updates, passports, voter registration, scholarships, and more — with eligibility checks, required documents, and step-by-step procedures in English, Hindi, and Tamil.
+
+A Gemini-powered AI copilot answers questions about any of the services. The React frontend and FastAPI backend are both deployed on Vercel and talk to each other through a CORS-secured API.
+
+**Live demo:** https://sevapath.vercel.app/
 
 ![SevaPath homepage](demo.png)
-**[Live demo](https://sevapath.vercel.app/)**
+
+## Features
+
+- 11 government services with full procedure guides
+- English, Hindi, and Tamil translations
+- AI copilot (Gemini primary, OpenAI fallback) for citizen queries
+- Eligibility checks and required-document lists per service
+- React frontend + FastAPI backend, deployed serverless on Vercel
+
+## Tech stack
+
+React (Create React App) · FastAPI · Google Gemini API · Vercel
+
+---
 
 ## Production Deployment Architecture
 
