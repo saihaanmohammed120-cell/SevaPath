@@ -1,6 +1,9 @@
 import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
-import { Button } from './ui/button';
+import { Button } from '@astryxdesign/core/Button';
+import { Text } from '@astryxdesign/core/Text';
+import { Heading } from '@astryxdesign/core/Heading';
+import { Card } from '@astryxdesign/core/Card';
 import { STAGES } from '../context/JourneyContext';
 import { useLang } from '../context/LanguageContext';
 
@@ -53,40 +56,30 @@ export default function NextStepCard({ journey, service, onAdvance }) {
   const step = map[stage] || map.understand;
 
   return (
-    <aside
-      aria-label={t.journey.nextStepTitle}
-      className="rounded-xl border border-border bg-card p-5 relative overflow-hidden"
-    >
-      <div
-        className="absolute inset-0 pointer-events-none opacity-70"
-        aria-hidden="true"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle at 100% 0%, hsl(var(--sp-terracotta) / 0.10), transparent 55%)',
-        }}
-      />
+    <Card aria-label={t.journey.nextStepTitle}>
       <div className="relative">
-        <div className="flex items-center gap-2 text-[11px] uppercase tracking-widest text-primary font-semibold">
+        <Text type="label" color="accent" className="flex items-center gap-2">
           <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
           {t.journey.nextStepTitle}
-        </div>
-        <p className="mt-2 font-display text-lg font-bold text-stone-900 dark:text-stone-100">
+        </Text>
+        <Heading level={3} className="mt-2">
           {t.journey.stages[stage]}
-        </p>
-        <p className="mt-1.5 text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
+        </Heading>
+        <Text type="body" as="p" className="mt-1.5">
           {step.body}
-        </p>
+        </Text>
         {step.target && (
-          <Button
-            className="mt-4 min-h-[44px] h-auto py-2 text-wrap leading-tight"
-            onClick={() => onAdvance(step.target)}
-            data-testid="next-step-cta"
-          >
-            {step.cta}
-            <ArrowRight className="w-4 h-4 ml-1" aria-hidden="true" />
-          </Button>
+          <div className="mt-4">
+            <Button
+              label={step.cta}
+              variant="primary"
+              icon={<ArrowRight className="w-4 h-4" aria-hidden="true" />}
+              onClick={() => onAdvance(step.target)}
+              data-testid="next-step-cta"
+            />
+          </div>
         )}
       </div>
-    </aside>
+    </Card>
   );
 }

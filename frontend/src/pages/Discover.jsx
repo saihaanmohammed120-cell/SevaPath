@@ -1,8 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Search, Loader2, AlertCircle, ArrowRight } from 'lucide-react';
+import { Search, Loader2, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Button } from '../components/ui/button';
+import { Button } from '@astryxdesign/core/Button';
+import { Text } from '@astryxdesign/core/Text';
+import { Heading } from '@astryxdesign/core/Heading';
+import { Card } from '@astryxdesign/core/Card';
+import { TabList, Tab } from '@astryxdesign/core/TabList';
+import { Banner } from '@astryxdesign/core/Banner';
+import { EmptyState } from '@astryxdesign/core/EmptyState';
 import { searchServices, listServices } from '../lib/api';
 import { useLang } from '../context/LanguageContext';
 import { useJourney } from '../context/JourneyContext';
@@ -74,82 +80,61 @@ export default function Discover() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-10 pb-16">
       {life ? (
         <div className="mb-8">
-          <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">Life Situation</p>
-          <h1 className="font-display text-3xl sm:text-4xl font-bold text-stone-900 dark:text-stone-100">
+          <Text type="label" color="accent" className="mb-2">Life Situation</Text>
+          <Heading level={1}>
             {t.home.lifeSituations.find((s) => s.id === life)?.label || life}
-          </h1>
-          <p className="text-lg text-stone-600 dark:text-stone-400 mt-2">
+          </Heading>
+          <Text type="large" as="p" className="mt-2">
             Here are some things you may want to take care of.
-          </p>
+          </Text>
         </div>
       ) : (
         <>
           <div className="flex items-center gap-2 text-sm text-stone-500 mb-3">
             <Search className="w-4 h-4" aria-hidden="true" />
-            {q ? `Results for “${q}”` : 'Browse services'}
+            <Text type="supporting">{q ? `Results for “${q}”` : 'Browse services'}</Text>
           </div>
-          <h1 className="font-display text-3xl sm:text-4xl font-bold mb-6">
+          <Heading level={1} className="mb-6">
             {results.length === 0 && !loading
               ? "I couldn't find a matching verified service"
               : "Which of these sounds right?"}
-          </h1>
+          </Heading>
         </>
       )}
 
       {results.length > 0 && (
-        <div
-          className="flex flex-wrap gap-2 mb-6"
-          role="tablist"
-          aria-label="Filter by jurisdiction"
-        >
-          {filterOptions.filter((o) => o.count > 0 || o.id === 'all').map((o) => (
-            <button
-              key={o.id}
-              type="button"
-              role="tab"
-              aria-selected={filter === o.id}
-              onClick={() => setFilter(o.id)}
-              data-testid={`filter-${o.id}`}
-              className={`min-h-[40px] px-3 rounded-full text-sm font-medium border transition-colors ${
-                filter === o.id
-                  ? 'bg-primary text-primary-foreground border-primary'
-                  : 'bg-card text-stone-700 dark:text-stone-300 border-border hover:border-primary/40'
-              }`}
-            >
-              {o.label}
-              <span className="ml-1.5 text-[11px] opacity-70">{o.count}</span>
-            </button>
-          ))}
+        <div className="mb-6">
+          <TabList value={filter} onChange={setFilter} aria-label="Filter by jurisdiction">
+            {filterOptions.filter((o) => o.count > 0 || o.id === 'all').map((o) => (
+              <Tab
+                key={o.id}
+                value={o.id}
+                label={o.label}
+                data-testid={`filter-${o.id}`}
+                endContent={<span className="text-[11px] opacity-70">{o.count}</span>}
+              />
+            ))}
+          </TabList>
         </div>
       )}
 
       {loading && (
         <div className="flex items-center gap-2 text-stone-500">
           <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
-          Searching…
+          <Text>Searching…</Text>
         </div>
       )}
 
       {error && (
-        <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive flex gap-2">
-          <AlertCircle className="w-4 h-4 mt-0.5" aria-hidden="true" />
-          {error}
-        </div>
+        <Banner status="error" title={error} collapsible={false} />
       )}
 
       {empty && !error && (
-        <div className="rounded-lg border border-border bg-card p-6 text-stone-700 dark:text-stone-300 space-y-3">
-          <p>
-            SevaPath's catalogue does not have a verified match for this yet.
-            Try describing the outcome more directly (e.g. "learner licence"
-            or "scholarship"), or open the SevaPath Guide for help.
-          </p>
-          <p className="text-xs text-stone-500">
-            SevaPath never guesses or fabricates services. Verified content is
-            added by the SevaPath team.
-          </p>
-          <Button onClick={() => nav('/')}>Back to home</Button>
-        </div>
+        <EmptyState
+          title="I couldn't find a matching verified service"
+          description="SevaPath's catalogue does not have a verified match for this yet. Try describing the outcome more directly (e.g. “learner licence” or “scholarship”), or open the SevaPath Guide for help. SevaPath never guesses or fabricates services. Verified content is added by the SevaPath team."
+          actions={<Button label="Back to home" variant="primary" onClick={() => nav('/')} />}
+        />
       )}
 
       <div className="space-y-8 mt-4">
@@ -181,9 +166,9 @@ export default function Discover() {
         })
         .map(([category, items]) => (
           <div key={category}>
-            <h2 className="text-xl font-display font-bold text-stone-900 dark:text-stone-100 mb-4 px-1 border-b border-border pb-2">
+            <Heading level={2} className="mb-4 px-1 border-b border-border pb-2">
               {category}
-            </h2>
+            </Heading>
             <ul className="space-y-3">
               {items.map((r, i) => (
                 <motion.li 
@@ -199,26 +184,24 @@ export default function Discover() {
                     type="button"
                     onClick={() => open(r)}
                     data-testid={`discover-result-${r.id}`}
-                    className="w-full text-left rounded-lg border border-border bg-card p-5 hover:border-primary/50 hover:shadow-md transition-all group"
+                    className="group w-full text-left"
                   >
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="font-display font-semibold text-lg text-stone-900 dark:text-stone-100 group-hover:text-primary transition-colors">
+                    <Card>
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <Heading level={3}>
                             {r.short_label}
-                          </h3>
-
+                          </Heading>
+                          <Text type="body" as="p" className="mt-1">
+                            {r.description}
+                          </Text>
+                          <Text type="supporting" as="p" className="mt-2">{r.authority_name}</Text>
                         </div>
-                        <p className="text-sm text-stone-600 dark:text-stone-400 mt-1">
-                          {r.description}
-                        </p>
-                        <p className="text-xs text-stone-500 mt-2">{r.authority_name}</p>
+                        <div className="flex flex-col items-end gap-2 shrink-0">
+                          <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-primary transition-colors transform group-hover:translate-x-1" aria-hidden="true" />
+                        </div>
                       </div>
-                      <div className="flex flex-col items-end gap-2 shrink-0">
-
-                        <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-primary transition-colors transform group-hover:translate-x-1" aria-hidden="true" />
-                      </div>
-                    </div>
+                    </Card>
                   </motion.button>
                 </motion.li>
               ))}

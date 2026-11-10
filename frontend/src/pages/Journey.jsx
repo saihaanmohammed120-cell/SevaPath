@@ -1,8 +1,11 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Loader2, ArrowLeft, BookmarkCheck, AlertTriangle } from 'lucide-react';
+import { Loader2, ArrowLeft, BookmarkCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '../components/ui/button';
+import { Button } from '@astryxdesign/core/Button';
+import { Text } from '@astryxdesign/core/Text';
+import { Heading } from '@astryxdesign/core/Heading';
+import { Banner } from '@astryxdesign/core/Banner';
 import JourneyTracker from '../components/JourneyTracker';
 import NextStepCard from '../components/NextStepCard';
 import UnderstandStage from '../stages/UnderstandStage';
@@ -58,10 +61,10 @@ export default function Journey() {
   if (!journey) {
     return (
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-16 text-center">
-        <p className="text-stone-600">Journey not found on this device.</p>
-        <Button onClick={() => nav('/')} className="mt-4">
-          {t.common.back}
-        </Button>
+        <Text type="body" as="p">Journey not found on this device.</Text>
+        <div className="mt-4">
+          <Button label={t.common.back} variant="primary" onClick={() => nav('/')} />
+        </div>
       </div>
     );
   }
@@ -70,33 +73,31 @@ export default function Journey() {
     return (
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-16 text-center">
         <Loader2 className="w-6 h-6 mx-auto animate-spin text-primary" aria-hidden="true" />
-        <p className="text-sm text-stone-500 mt-3">Loading…</p>
+        <Text type="supporting" as="p" className="mt-3">Loading…</Text>
       </div>
     );
   }
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-6 pb-20">
-      <button
+      <Button
+        label={t.common.back}
+        variant="ghost"
+        icon={<ArrowLeft className="w-4 h-4" aria-hidden="true" />}
         onClick={() => nav(-1)}
-        className="inline-flex items-center gap-1 text-sm text-stone-600 dark:text-stone-400 hover:text-primary mb-4 min-h-[44px]"
-      >
-        <ArrowLeft className="w-4 h-4" aria-hidden="true" />
-        {t.common.back}
-      </button>
+        className="mb-4"
+      />
 
       {service.is_test_fixture && (
-        <div
-          role="alert"
-          data-testid={TIDS.testOnlyBanner}
-          className="rounded-lg border border-amber-300 bg-amber-50 dark:bg-amber-900/20 dark:border-amber-800 p-4 mb-6 flex items-start gap-3"
-        >
-          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-200 text-amber-900 shrink-0">
-            {t.common.testOnly}
-          </span>
-          <p className="text-sm text-amber-900 dark:text-amber-200">
-            {t.journey.testOnly}
-          </p>
+        <div className="mb-6">
+          <Banner
+            status="warning"
+            title={t.common.testOnly}
+            description={t.journey.testOnly}
+            collapsible={false}
+            role="alert"
+            data-testid={TIDS.testOnlyBanner}
+          />
         </div>
       )}
 
@@ -115,15 +116,14 @@ export default function Journey() {
       )}
 
       {journey.stage === 'procedure' && missingRequiredDocs > 0 && (
-        <div
-          role="alert"
-          data-testid="docs-readiness-warning"
-          className="rounded-lg border border-amber-300 bg-amber-50 dark:bg-amber-900/20 dark:border-amber-800 p-4 mb-6 flex items-start gap-3"
-        >
-          <AlertTriangle className="w-5 h-5 text-amber-700 dark:text-amber-400 shrink-0" aria-hidden="true" />
-          <p className="text-sm text-amber-900 dark:text-amber-200">
-            {t.journey.documentsMissingWarn(missingRequiredDocs)}
-          </p>
+        <div className="mb-6">
+          <Banner
+            status="warning"
+            title={t.journey.documentsMissingWarn(missingRequiredDocs)}
+            collapsible={false}
+            role="alert"
+            data-testid="docs-readiness-warning"
+          />
         </div>
       )}
 
@@ -143,10 +143,10 @@ export default function Journey() {
 
         <main className="md:pt-0">
           <div className="mb-8">
-            <h1 className="font-display text-3xl sm:text-4xl font-bold text-stone-900 dark:text-stone-100 mb-2">
+            <Heading level={1} className="mb-2">
               {service.identity?.short_label}
-            </h1>
-            <p className="text-sm text-stone-500">Provided by {service.provider?.name}</p>
+            </Heading>
+            <Text type="supporting" as="p">Provided by {service.provider?.name}</Text>
           </div>
           <AnimatePresence mode="wait">
             <motion.div

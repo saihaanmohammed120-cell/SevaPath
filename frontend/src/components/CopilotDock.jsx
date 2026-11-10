@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { MessageCircle, Send, Loader2, Compass } from 'lucide-react';
+import { Send, Loader2, Compass } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from './ui/sheet';
-import { Button } from './ui/button';
+import { Drawer } from '@astryxdesign/core/Drawer';
+import { Button } from '@astryxdesign/core/Button';
+import { Text } from '@astryxdesign/core/Text';
+import { Heading } from '@astryxdesign/core/Heading';
+import { TextArea } from '@astryxdesign/core/TextArea';
 import { useLang } from '../context/LanguageContext';
 import { useJourney } from '../context/JourneyContext';
 import { askCopilot } from '../lib/api';
@@ -129,31 +132,45 @@ export default function CopilotDock() {
         <span className="font-medium text-sm">SevaPath Guide</span>
       </button>
 
-      <Sheet open={guideOpen} onOpenChange={handleOpenChange}>
-        <SheetContent
-          side="right"
-          className="w-full sm:max-w-md p-0 flex flex-col bg-background text-foreground"
-          data-testid={TIDS.copilotPanel}
-        >
-          <SheetHeader className="px-5 py-4 border-b border-border bg-card">
-            <SheetTitle className="flex items-center gap-2 font-display">
+      <Drawer
+        isOpen={guideOpen}
+        onOpenChange={handleOpenChange}
+        label="SevaPath Guide"
+        width={400}
+        purpose="form"
+        // Below 640px the drawer keeps a 56px page reveal, leaving a
+        // ~330px panel where the header title wraps mid-phrase and the
+        // subtitle is squeezed. Full-width on mobile is the documented
+        // fix for chat-style drawers. NOTE: experimental prop — it may
+        // change in a future Astryx patch; re-check after any upgrade.
+        experimental={{ isFullWidthOnMobile: true }}
+        data-testid={TIDS.copilotPanel}
+      >
+        <div className="flex flex-col h-full">
+          <div className="px-5 py-4 border-b border-border bg-card shrink-0">
+            <div className="flex items-center gap-2">
               <span
                 className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-primary text-primary-foreground shadow-sm shrink-0"
                 aria-hidden="true"
               >
                 <Compass className="w-5 h-5" />
               </span>
-              <div className="text-left leading-tight">
-                <div className="text-base font-bold text-stone-900 dark:text-stone-100">
+              {/* Same Astryx Text quirk as the footer/tracker: both Texts
+                  are display:inline, so without flex-col the subtitle
+                  runs onto the title line and collides with the badge. */}
+              <div className="text-left leading-tight flex flex-col">
+                <Text weight="bold" className="text-base">
                   SevaPath Guide
-                </div>
-                <div className="text-[11px] font-normal text-stone-500 dark:text-stone-400">
+                </Text>
+                <Text type="supporting" as="p">
                   {t.copilot.subtitle}
-                </div>
+                </Text>
               </div>
-              <TrustBadge variant="ai-guidance" className="ml-auto" />
-            </SheetTitle>
-          </SheetHeader>
+              <span className="ml-auto">
+                <TrustBadge variant="ai-guidance" />
+              </span>
+            </div>
+          </div>
 
           <div
             className="flex-1 overflow-y-auto px-4 py-5 space-y-4"
@@ -161,34 +178,33 @@ export default function CopilotDock() {
             aria-live="polite"
           >
             {messages.length === 0 && (
-              <div className="text-sm text-stone-600 dark:text-stone-400 space-y-4">
+              <div className="text-sm space-y-4">
                 <div>
-                  <h3 className="font-display font-bold text-lg text-stone-900 dark:text-stone-100 mb-1">
+                  <Heading level={3} className="mb-1">
                     {contextualTitle}
-                  </h3>
-                  <p className="leading-relaxed">{t.copilot.emptyBody}</p>
+                  </Heading>
+                  <Text type="body" as="p">{t.copilot.emptyBody}</Text>
                 </div>
                 <div>
-                  <p className="text-[11px] uppercase tracking-widest text-stone-500 font-semibold mb-2">
+                  <Text type="label" className="mb-2">
                     Try one of these
-                  </p>
+                  </Text>
                   <div className="flex flex-wrap gap-2">
                     {contextualSuggestions.map((s, i) => (
-                      <button
+                      <Button
                         key={i}
-                        type="button"
+                        label={s}
+                        variant="secondary"
+                        size="sm"
                         onClick={() => sendText(s)}
                         data-testid={`copilot-suggestion-${i}`}
-                        className="min-h-[40px] px-3 rounded-full border border-border bg-card text-sm text-stone-700 dark:text-stone-300 hover:border-primary/40 hover:text-primary transition-colors"
-                      >
-                        {s}
-                      </button>
+                      />
                     ))}
                   </div>
                 </div>
-                <p className="text-xs text-stone-500 border border-border rounded-md p-3 bg-muted/40 leading-relaxed">
-                  {t.copilot.safety}
-                </p>
+                <div className="text-xs border border-border rounded-md p-3 bg-muted/40 leading-relaxed">
+                  <Text type="supporting" as="p">{t.copilot.safety}</Text>
+                </div>
               </div>
             )}
             {messages.map((m, i) => (
@@ -227,37 +243,42 @@ export default function CopilotDock() {
 
           <form
             onSubmit={submit}
-            className="border-t border-border p-3 flex gap-2 items-end bg-background"
+            className="border-t border-border p-3 flex gap-2 items-end bg-background shrink-0"
           >
-            <textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
+            <div
+              className="flex-1 min-w-0"
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault();
                   submit();
                 }
               }}
-              placeholder={t.copilot.placeholder}
-              rows={2}
-              data-testid={TIDS.copilotInput}
-              aria-label={t.copilot.placeholder}
-              className="flex-1 resize-none min-h-[44px] rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-            />
+            >
+              <TextArea
+                label={t.copilot.placeholder}
+                isLabelHidden
+                value={input}
+                onChange={(v) => setInput(v)}
+                placeholder={t.copilot.placeholder}
+                rows={2}
+                data-testid={TIDS.copilotInput}
+                width="100%"
+              />
+            </div>
             <Button
               type="submit"
-              disabled={!input.trim() || sending}
+              label="Send"
+              isIconOnly
+              icon={<Send className="w-4 h-4" aria-hidden="true" />}
+              isDisabled={!input.trim() || sending}
               data-testid={TIDS.copilotSend}
-              className="h-11"
-            >
-              <Send className="w-4 h-4" aria-hidden="true" />
-            </Button>
+            />
           </form>
-          <div className="px-4 pb-3 text-[11px] text-stone-500 leading-relaxed">
+          <div className="px-4 pb-3 text-[11px] text-stone-500 leading-relaxed shrink-0">
             {t.copilot.safety}
           </div>
-        </SheetContent>
-      </Sheet>
+        </div>
+      </Drawer>
     </>
   );
 }

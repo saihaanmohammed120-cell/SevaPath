@@ -1,6 +1,9 @@
 import React from 'react';
 import { Check } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Card } from '@astryxdesign/core/Card';
+import { Text } from '@astryxdesign/core/Text';
+import { ProgressBar } from '@astryxdesign/core/ProgressBar';
 import { STAGES } from '../context/JourneyContext';
 import { useLang } from '../context/LanguageContext';
 import { TIDS } from '../lib/testids';
@@ -24,29 +27,30 @@ export default function JourneyTracker({ currentStage, completedStages = [], onS
   return (
     <div className="space-y-4">
       {/* Mobile compact view */}
-      <div className="md:hidden flex flex-col gap-2 bg-card border border-border p-3 rounded-xl mb-4" data-testid="mobile-journey-tracker">
-         <div className="flex flex-col">
-            <span className="text-[10px] text-primary font-bold uppercase tracking-wider mb-0.5">
-               Step {currentIndex + 1} of {STAGES.length}
-            </span>
-            <span className="text-sm font-semibold text-stone-900 dark:text-stone-100">
-               {stageLabels[currentStage]}
-            </span>
-         </div>
-         <div className="flex gap-1.5 w-full">
-            {STAGES.map((s, i) => (
-              <div 
-                key={s} 
-                className={`flex-1 h-1.5 rounded-full ${
-                  i < currentIndex 
-                    ? 'bg-primary/50' 
-                    : i === currentIndex 
-                    ? 'bg-primary' 
-                    : 'bg-stone-200 dark:bg-stone-800'
-                }`} 
-              />
-            ))}
-         </div>
+      <div className="md:hidden mb-4" data-testid="mobile-journey-tracker">
+        <Card>
+          {/* Astryx Text renders display:inline, so the two labels need
+              the original flex-col wrapper or they run together on one
+              line ("Step 4 of 6Documents"). */}
+          <div className="flex flex-col">
+            <Text type="label" color="accent" className="mb-0.5">
+              Step {currentIndex + 1} of {STAGES.length}
+            </Text>
+            <Text weight="semibold" className="text-sm">
+              {stageLabels[currentStage]}
+            </Text>
+          </div>
+          <div className="mt-2">
+            <ProgressBar
+              label="Journey progress"
+              value={currentIndex + 1}
+              max={STAGES.length}
+              isLabelHidden
+              hasValueLabel={false}
+              variant="accent"
+            />
+          </div>
+        </Card>
       </div>
 
       {/* Desktop detailed view */}

@@ -1,7 +1,11 @@
 import React from 'react';
 import { Sun, Moon, Monitor, Type, MousePointer2, ShieldCheck, Info, Trash2, RotateCcw } from 'lucide-react';
-import { Button } from '../components/ui/button';
-import { Switch } from '../components/ui/switch';
+import { Button } from '@astryxdesign/core/Button';
+import { Switch } from '@astryxdesign/core/Switch';
+import { Text } from '@astryxdesign/core/Text';
+import { Heading } from '@astryxdesign/core/Heading';
+import { Card } from '@astryxdesign/core/Card';
+import { SegmentedControl, SegmentedControlItem } from '@astryxdesign/core/SegmentedControl';
 import { useSettings } from '../context/SettingsContext';
 import { useJourney } from '../context/JourneyContext';
 import { useLang } from '../context/LanguageContext';
@@ -21,98 +25,82 @@ export default function Settings() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-10 pb-20">
-      <h1 className="font-display text-3xl sm:text-4xl font-bold mb-8">{t.settings.title}</h1>
+      <Heading level={1} className="mb-8">{t.settings.title}</Heading>
 
       <Section title={t.settings.theme}>
-        <div className="flex gap-2 flex-wrap">
+        <SegmentedControl
+          label="Theme"
+          value={settings.theme}
+          onChange={(v) => update({ theme: v })}
+        >
           {THEMES.map(({ v, Icon }) => (
-            <button
+            <SegmentedControlItem
               key={v}
-              type="button"
-              onClick={() => update({ theme: v })}
+              value={v}
+              label={v === 'light' ? t.settings.themeLight : v === 'dark' ? t.settings.themeDark : t.settings.themeSystem}
+              icon={<Icon className="w-4 h-4" aria-hidden="true" />}
               data-testid={TIDS.settingsTheme(v)}
-              className={`min-h-[48px] px-4 rounded-md border inline-flex items-center gap-2 text-sm font-medium transition-colors ${
-                settings.theme === v
-                  ? 'border-primary bg-accent text-primary'
-                  : 'border-border bg-card text-stone-700 dark:text-stone-300 hover:border-primary/40'
-              }`}
-              aria-pressed={settings.theme === v}
-            >
-              <Icon className="w-4 h-4" aria-hidden="true" />
-              {v === 'light' ? t.settings.themeLight : v === 'dark' ? t.settings.themeDark : t.settings.themeSystem}
-            </button>
+            />
           ))}
-        </div>
+        </SegmentedControl>
       </Section>
 
       <Section title={t.settings.textSize} icon={Type}>
-        <div className="flex gap-2 flex-wrap">
+        <SegmentedControl
+          label="Text size"
+          value={settings.textSize}
+          onChange={(v) => update({ textSize: v })}
+        >
           {SIZES.map((s) => (
-            <button
+            <SegmentedControlItem
               key={s}
-              type="button"
-              onClick={() => update({ textSize: s })}
+              value={s}
+              label={s === 'default' ? t.settings.textDefault : s === 'large' ? t.settings.textLarge : t.settings.textXL}
               data-testid={TIDS.settingsTextSize(s)}
-              className={`min-h-[48px] px-4 rounded-md border text-sm font-medium transition-colors ${
-                settings.textSize === s
-                  ? 'border-primary bg-accent text-primary'
-                  : 'border-border bg-card text-stone-700 dark:text-stone-300 hover:border-primary/40'
-              }`}
-              aria-pressed={settings.textSize === s}
-            >
-              {s === 'default' ? t.settings.textDefault : s === 'large' ? t.settings.textLarge : t.settings.textXL}
-            </button>
+            />
           ))}
-        </div>
+        </SegmentedControl>
       </Section>
 
       <Section title={t.settings.reduceMotion} icon={MousePointer2}>
-        <div className="flex items-center gap-3">
-          <Switch
-            checked={settings.reduceMotion}
-            onCheckedChange={(v) => update({ reduceMotion: !!v })}
-            data-testid={TIDS.settingsReduceMotion}
-            aria-label={t.settings.reduceMotion}
-          />
-          <span className="text-sm text-stone-600 dark:text-stone-400">
-            Turn off non-essential animations
-          </span>
-        </div>
+        <Switch
+          label={t.settings.reduceMotion}
+          value={settings.reduceMotion}
+          onChange={(checked) => update({ reduceMotion: !!checked })}
+          description="Turn off non-essential animations"
+          data-testid={TIDS.settingsReduceMotion}
+        />
       </Section>
 
       <Section title={t.settings.privacy} icon={ShieldCheck}>
-        <p className="text-sm text-stone-700 dark:text-stone-300 mb-4">
+        <Text type="body" as="p" className="mb-4">
           {t.settings.savedOnDevice}
-        </p>
+        </Text>
         <div className="flex flex-wrap gap-3">
           <Button
-            variant="outline"
+            variant="destructive"
+            label={t.settings.clearAll}
+            icon={<Trash2 className="w-4 h-4" aria-hidden="true" />}
             onClick={() => {
               if (window.confirm(t.my.clearConfirm)) clearAll();
             }}
             data-testid={TIDS.settingsClearData}
-            className="min-h-[44px]"
-          >
-            <Trash2 className="w-4 h-4 mr-1" aria-hidden="true" />
-            {t.settings.clearAll}
-          </Button>
+          />
           <Button
             variant="ghost"
+            label={t.settings.reset}
+            icon={<RotateCcw className="w-4 h-4" aria-hidden="true" />}
             onClick={() => {
               if (window.confirm('Reset SevaPath preferences to defaults?')) reset();
             }}
-            className="min-h-[44px]"
-          >
-            <RotateCcw className="w-4 h-4 mr-1" aria-hidden="true" />
-            {t.settings.reset}
-          </Button>
+          />
         </div>
       </Section>
 
       <Section title={t.settings.about} icon={Info}>
-        <p className="text-sm text-stone-700 dark:text-stone-300 leading-relaxed">
+        <Text type="body" as="p">
           {t.settings.aboutBody}
-        </p>
+        </Text>
 
       </Section>
     </div>
@@ -122,11 +110,13 @@ export default function Settings() {
 function Section({ title, icon: Icon, children }) {
   return (
     <section className="mb-8">
-      <h2 className="font-display text-lg font-semibold flex items-center gap-2 mb-4">
-        {Icon && <Icon className="w-4 h-4 text-primary" aria-hidden="true" />}
-        {title}
-      </h2>
-      <div className="rounded-lg border border-border bg-card p-5">{children}</div>
+      <Heading level={2} className="mb-4">
+        <span className="inline-flex items-center gap-2">
+          {Icon && <Icon className="w-4 h-4 text-primary" aria-hidden="true" />}
+          {title}
+        </span>
+      </Heading>
+      <Card>{children}</Card>
     </section>
   );
 }
