@@ -1,6 +1,6 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { Upload, FileText, Image as ImageIcon, X, Camera, Replace } from 'lucide-react';
-import { Button } from './ui/button';
+import { Button } from '@astryxdesign/core/Button';
 import { useLang } from '../context/LanguageContext';
 import { TIDS } from '../lib/testids';
 import { loadDocument } from '../lib/db';
@@ -127,25 +127,21 @@ export default function DocumentUpload({
           />
           <Button
             type="button"
-            variant="outline"
+            variant="secondary"
             size="sm"
+            icon={<Replace className="w-4 h-4" aria-hidden="true" />}
+            label={t.documents.replace}
             onClick={() => inputRef.current?.click()}
-            className="h-9"
-          >
-            <Replace className="w-4 h-4 mr-1" aria-hidden="true" />
-            {t.documents.replace}
-          </Button>
+          />
           <Button
             type="button"
             variant="ghost"
             size="sm"
+            icon={<X className="w-4 h-4" aria-hidden="true" />}
+            label={t.documents.remove}
             onClick={onRemove}
             data-testid={TIDS.documentRemove(docId)}
-            className="h-9 text-destructive hover:text-destructive"
-          >
-            <X className="w-4 h-4 mr-1" aria-hidden="true" />
-            {t.documents.remove}
-          </Button>
+          />
         </div>
       </div>
     );

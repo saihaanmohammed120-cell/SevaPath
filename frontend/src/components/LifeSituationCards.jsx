@@ -3,6 +3,10 @@ import {
   Plane, Cake, Home, Briefcase, HeartPulse,
   ShieldCheck, HelpCircle,
 } from 'lucide-react';
+import { Card } from '@astryxdesign/core/Card';
+import { Grid } from '@astryxdesign/core/Grid';
+import { Heading } from '@astryxdesign/core/Heading';
+import { Text } from '@astryxdesign/core/Text';
 import { useLang } from '../context/LanguageContext';
 import { TIDS } from '../lib/testids';
 
@@ -19,7 +23,7 @@ const ICONS = {
 export default function LifeSituationCards({ onPick }) {
   const { t } = useLang();
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <Grid columns={{ minWidth: 280, max: 4 }} gap={4}>
       {t.home.lifeSituations.map((s) => {
         const Icon = ICONS[s.id] || HelpCircle;
         return (
@@ -28,22 +32,24 @@ export default function LifeSituationCards({ onPick }) {
             type="button"
             onClick={() => onPick?.(s.id)}
             data-testid={TIDS.lifeSituationCard(s.id)}
-            className="group text-left rounded-xl border border-border bg-card p-5 hover:border-primary/40 hover:-translate-y-1 hover:shadow-md hover:bg-card focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 transition-all duration-300 flex flex-col h-full"
+            className="group text-left h-full transition-all duration-300 hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-xl"
           >
-            <span className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary mb-4 transition-transform group-hover:scale-110">
-              <Icon className="w-5 h-5" aria-hidden="true" />
-            </span>
-            <div className="text-base font-semibold text-stone-900 dark:text-stone-100 group-hover:text-primary transition-colors mb-2">
-              {s.label}
-            </div>
-            {s.desc && (
-              <div className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed mt-auto">
-                {s.desc}
-              </div>
-            )}
+            <Card>
+              <span className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary mb-4 transition-transform group-hover:scale-110">
+                <Icon className="w-5 h-5" aria-hidden="true" />
+              </span>
+              <Heading level={3} className="mb-2">
+                {s.label}
+              </Heading>
+              {s.desc && (
+                <Text type="body" as="p" className="mt-auto">
+                  {s.desc}
+                </Text>
+              )}
+            </Card>
           </button>
         );
       })}
-    </div>
+    </Grid>
   );
 }

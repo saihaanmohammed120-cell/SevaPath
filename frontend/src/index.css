@@ -1,8 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Chivo:wght@300;400;500;700;900&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
 
-@tailwind base;
+@import '@astryxdesign/core/reset.css';
+@import '@astryxdesign/core/astryx.css';
+@import '@astryxdesign/theme-chocolate/theme.css';
+@import '@astryxdesign/theme-chocolate/fonts.css';
+
+@layer tw-preflight {
+  @tailwind base; /* layered: astryx-theme now wins over preflight */
+}
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; /* unlayered: legacy utility classes keep winning */
 
 @layer base {
   :root {
