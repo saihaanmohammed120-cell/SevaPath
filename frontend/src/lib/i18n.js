@@ -44,6 +44,8 @@ const en = {
     ],
   },
   journey: {
+    testOnly:
+      'This is a test service with demo data. It is not a real government service.',
     stages: {
       understand: 'Understand',
       confirm: 'Confirm',
@@ -166,6 +168,7 @@ const en = {
     yes: 'Yes',
     no: 'No',
     sources: 'Sources',
+    testOnly: 'Test only',
   },
 };
 
@@ -204,6 +207,8 @@ const hi = {
     ],
   },
   journey: {
+    testOnly:
+      'यह डेमो डेटा वाली एक परीक्षण सेवा है। यह असली सरकारी सेवा नहीं है।',
     stages: {
       understand: 'समझें',
       confirm: 'पुष्टि करें',
@@ -326,6 +331,7 @@ const hi = {
     yes: 'हाँ',
     no: 'नहीं',
     sources: 'स्रोत',
+    testOnly: 'केवल परीक्षण हेतु',
   },
 };
 
@@ -364,6 +370,8 @@ const ta = {
     ],
   },
   journey: {
+    testOnly:
+      'இது டெமோ தரவுகளுடன் கூடிய சோதனைச் சேவை. இது உண்மையான அரசு சேவை அல்ல.',
     stages: {
       understand: 'புரிந்துகொள்க',
       confirm: 'உறுதிப்படுத்துக',
@@ -486,6 +494,7 @@ const ta = {
     yes: 'ஆம்',
     no: 'இல்லை',
     sources: 'ஆதாரங்கள்',
+    testOnly: 'சோதனை மட்டும்',
   },
 };
 

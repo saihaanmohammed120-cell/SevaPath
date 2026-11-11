@@ -195,7 +195,7 @@ export default function Discover() {
                           <Text type="body" as="p" className="mt-1">
                             {r.description}
                           </Text>
-                          <Text type="supporting" as="p" className="mt-2">{r.authority_name}</Text>
+                          <Text type="supporting" as="p" display="block" className="mt-2">{r.authority_name}</Text>
                         </div>
                         <div className="flex flex-col items-end gap-2 shrink-0">
                           <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-primary transition-colors transform group-hover:translate-x-1" aria-hidden="true" />

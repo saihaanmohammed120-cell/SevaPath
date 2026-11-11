@@ -31,7 +31,7 @@ export default function ConfirmStage({ service, onContinue }) {
               {service.jurisdiction?.state ? ` · ${service.jurisdiction.state}` : ''}
               {service.jurisdiction?.level ? ` · ${service.jurisdiction.level}` : ''}
             </Text>
-            <Text type="body" as="p" className="mt-3">
+            <Text type="body" as="p" display="block" className="mt-3">
               {service.description}
             </Text>
           </div>
