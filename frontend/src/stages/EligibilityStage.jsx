@@ -56,7 +56,7 @@ export default function EligibilityStage({ service, journey, onAnswer, onResult,
               >
                 {rule.question}
               </Text>
-              <Text type="supporting" as="p" className="mt-1">{rule.explanation}</Text>
+              <Text type="supporting" as="p" display="block" className="mt-1">{rule.explanation}</Text>
               <div className="flex gap-2 mt-3">
                 <Button
                   size="sm"

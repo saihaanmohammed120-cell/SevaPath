@@ -61,7 +61,7 @@ export default function DocumentsStage({ service, journey, onSetStatus, onUpload
                       {d.description}
                     </Text>
                     {d.alternatives?.length > 0 && (
-                      <Text type="supporting" as="p" className="mt-1">
+                      <Text type="supporting" as="p" display="block" className="mt-1">
                         Alternatives: {d.alternatives.join(', ')}
                       </Text>
                     )}

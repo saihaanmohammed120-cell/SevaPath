@@ -42,7 +42,7 @@ export default function ProcedureStage({ service, onContinue }) {
         </Text>
       )}
       {service.deadlines && (
-        <Text type="body" as="p" className="mt-1">
+        <Text type="body" as="p" display="block" className="mt-1">
           <strong>Deadlines:</strong> {service.deadlines}
         </Text>
       )}

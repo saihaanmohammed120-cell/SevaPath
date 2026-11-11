@@ -146,7 +146,7 @@ export default function Journey() {
             <Heading level={1} className="mb-2">
               {service.identity?.short_label}
             </Heading>
-            <Text type="supporting" as="p">Provided by {service.provider?.name}</Text>
+            <Text type="supporting" as="p">Provided by {service.authority?.name}</Text>
           </div>
           <AnimatePresence mode="wait">
             <motion.div

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Send, Loader2, Compass } from 'lucide-react';
+import { Send, Loader2, Compass, X } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import { Drawer } from '@astryxdesign/core/Drawer';
 import { Button } from '@astryxdesign/core/Button';
@@ -169,6 +169,18 @@ export default function CopilotDock() {
               <span className="ml-auto">
                 <TrustBadge variant="ai-guidance" />
               </span>
+              {/* Astryx Drawer renders no close button of its own, and with
+                  purpose="form" an outside tap does not close it — on phones
+                  the full-width drawer had no way to close at all (Escape
+                  only). Give it an explicit close button. */}
+              <Button
+                variant="ghost"
+                size="sm"
+                icon={<X className="w-4 h-4" aria-hidden="true" />}
+                onClick={() => handleOpenChange(false)}
+                aria-label={t.common.close}
+                className="shrink-0"
+              />
             </div>
           </div>
 
