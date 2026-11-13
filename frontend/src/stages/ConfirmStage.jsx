@@ -12,7 +12,7 @@ export default function ConfirmStage({ service, onContinue }) {
   return (
     <section aria-labelledby="stage-confirm">
       <Text type="label" color="accent" className="mb-2">
-        Step 2 · {t.journey.stages.confirm}
+        {`Step 2 · ${t.journey.stages.confirm}`}
       </Text>
       <Heading level={2} id="stage-confirm" className="mb-4">
         {t.journey.confirmTitle}

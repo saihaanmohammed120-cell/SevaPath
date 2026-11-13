@@ -34,7 +34,7 @@ export default function JourneyTracker({ currentStage, completedStages = [], onS
               line ("Step 4 of 6Documents"). */}
           <div className="flex flex-col">
             <Text type="label" color="accent" className="mb-0.5">
-              Step {currentIndex + 1} of {STAGES.length}
+              {`Step ${currentIndex + 1} of ${STAGES.length}`}
             </Text>
             <Text weight="semibold" className="text-sm">
               {stageLabels[currentStage]}

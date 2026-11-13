@@ -11,7 +11,7 @@ export default function ProcedureStage({ service, onContinue }) {
   return (
     <section aria-labelledby="stage-procedure">
       <Text type="label" color="accent" className="mb-2">
-        Step 5 · {t.journey.stages.procedure}
+        {`Step 5 · ${t.journey.stages.procedure}`}
       </Text>
       <Heading level={2} id="stage-procedure" className="mb-2">
         How the process works
@@ -38,12 +38,12 @@ export default function ProcedureStage({ service, onContinue }) {
 
       {service.fees && (
         <Text type="body" as="p" className="mt-6">
-          <strong>Fees:</strong> {service.fees}
+          <strong>Fees:</strong>{` ${service.fees}`}
         </Text>
       )}
       {service.deadlines && (
         <Text type="body" as="p" display="block" className="mt-1">
-          <strong>Deadlines:</strong> {service.deadlines}
+          <strong>Deadlines:</strong>{` ${service.deadlines}`}
         </Text>
       )}
 

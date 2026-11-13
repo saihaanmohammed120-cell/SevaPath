@@ -59,7 +59,7 @@ export default function ApplicationStage({ service }) {
   return (
     <section aria-labelledby="stage-application">
       <Text type="label" color="accent" className="mb-2">
-        Step 6 · {t.journey.stages.application}
+        {`Step 6 · ${t.journey.stages.application}`}
       </Text>
       <Heading level={2} id="stage-application" className="mb-2">
         Ready to act

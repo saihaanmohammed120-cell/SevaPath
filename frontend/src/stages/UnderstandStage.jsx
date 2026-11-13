@@ -10,7 +10,7 @@ export default function UnderstandStage({ service, onConfirm, onReject }) {
   return (
     <section aria-labelledby="stage-understand">
       <Text type="label" color="accent" className="mb-4">
-        Step 1 · {t.journey.stages.understand}
+        {`Step 1 · ${t.journey.stages.understand}`}
       </Text>
       <Text type="large" as="p" display="block" className="max-w-2xl" weight="medium">
         {service.description}

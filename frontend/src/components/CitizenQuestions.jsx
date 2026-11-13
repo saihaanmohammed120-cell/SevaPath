@@ -65,8 +65,8 @@ export default function CitizenQuestions({ faqs = [], category = null }) {
                         <span className="text-emerald-700 dark:text-emerald-500 font-medium mr-2">
                           ✓ Verified
                         </span>
-                        Source: {faq.source_name || 'Official'}
-                        {faq.verified_at && <span className="ml-2">Checked: {faq.verified_at}</span>}
+                        {`Source: ${faq.source_name || 'Official'}`}
+                        {faq.verified_at && <span className="ml-2">{`Checked: ${faq.verified_at}`}</span>}
                       </div>
                     </>
                   ) : (
@@ -76,7 +76,7 @@ export default function CitizenQuestions({ faqs = [], category = null }) {
                         <span className="text-amber-600 dark:text-amber-500 font-medium mr-2">
                           Needs verification
                         </span>
-                        Official source: {faq.source_name || 'Unknown'}
+                        {`Official source: ${faq.source_name || 'Unknown'}`}
                       </div>
                     </>
                   )}
