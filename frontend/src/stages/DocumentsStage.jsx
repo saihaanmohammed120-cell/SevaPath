@@ -18,7 +18,7 @@ export default function DocumentsStage({ service, journey, onSetStatus, onUpload
   return (
     <section aria-labelledby="stage-documents">
       <Text type="label" color="accent" className="mb-2">
-        Step 4 · {t.journey.stages.documents}
+        {`Step 4 · ${t.journey.stages.documents}`}
       </Text>
       <Heading level={2} id="stage-documents" className="mb-2">
         What you may need
@@ -62,7 +62,7 @@ export default function DocumentsStage({ service, journey, onSetStatus, onUpload
                     </Text>
                     {d.alternatives?.length > 0 && (
                       <Text type="supporting" as="p" display="block" className="mt-1">
-                        Alternatives: {d.alternatives.join(', ')}
+                        {`Alternatives: ${d.alternatives.join(', ')}`}
                       </Text>
                     )}
                   </div>

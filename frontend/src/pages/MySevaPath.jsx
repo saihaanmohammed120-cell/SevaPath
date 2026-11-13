@@ -79,7 +79,7 @@ export default function MySevaPath() {
                         )}
                       </div>
                       <Text type="supporting" as="p" className="mt-1">
-                        Updated {new Date(j.updatedAt).toLocaleString()}
+                        {`Updated ${new Date(j.updatedAt).toLocaleString()}`}
                       </Text>
                       <div className="mt-3">
                         <div className="flex items-center justify-between text-xs text-stone-500 mb-1">

@@ -35,7 +35,7 @@ export default function EligibilityStage({ service, journey, onAnswer, onResult,
   return (
     <section aria-labelledby="stage-eligibility">
       <Text type="label" color="accent" className="mb-2">
-        Step 3 · {t.journey.stages.eligibility}
+        {`Step 3 · ${t.journey.stages.eligibility}`}
       </Text>
       <Heading level={2} id="stage-eligibility" className="mb-2">
         Let's check the requirements
