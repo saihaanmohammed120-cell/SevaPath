@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Mic, MicOff, Loader2, Check, X, Edit2 } from 'lucide-react';
+import { Button } from '@astryxdesign/core/Button';
+import { TextArea } from '@astryxdesign/core/TextArea';
+import { Text } from '@astryxdesign/core/Text';
 import { useLang } from '../context/LanguageContext';
 import { TIDS } from '../lib/testids';
 
@@ -186,48 +189,50 @@ export default function VoiceInput({ onTranscript, size = 'md' }) {
             {t.voice.heardYou}
           </p>
           {editing ? (
-            <textarea
-              autoFocus
+            <TextArea
+              label={t.voice.preview}
+              isLabelHidden
+              hasAutoFocus
               rows={2}
               value={preview}
-              onChange={(e) => setPreview(e.target.value)}
-              className="w-full resize-none rounded-md border border-input bg-background px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+              onChange={(v) => setPreview(v)}
               data-testid="voice-preview-edit"
+              width="100%"
             />
           ) : (
-            <p className="text-sm text-stone-800 dark:text-stone-200 break-words">
+            <Text type="body" as="p">
               {preview || '…'}
-            </p>
+            </Text>
           )}
           <div className="flex flex-wrap gap-2 mt-3">
-            <button
+            <Button
               type="button"
+              label={t.voice.confirmSend}
+              variant="primary"
+              size="sm"
+              icon={<Check className="w-3.5 h-3.5" aria-hidden="true" />}
               onClick={confirmSend}
-              disabled={!preview.trim()}
-              className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md bg-primary text-primary-foreground text-xs font-medium disabled:opacity-50 hover:bg-[hsl(var(--sp-terracotta-deep))]"
+              isDisabled={!preview.trim()}
               data-testid="voice-preview-confirm"
-            >
-              <Check className="w-3.5 h-3.5" aria-hidden="true" />
-              {t.voice.confirmSend}
-            </button>
-            <button
+            />
+            <Button
               type="button"
+              label={t.voice.edit}
+              variant="secondary"
+              size="sm"
+              icon={<Edit2 className="w-3.5 h-3.5" aria-hidden="true" />}
               onClick={() => setEditing((e) => !e)}
-              className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md border border-border bg-background text-xs font-medium hover:bg-accent"
               data-testid="voice-preview-edit-toggle"
-            >
-              <Edit2 className="w-3.5 h-3.5" aria-hidden="true" />
-              {t.voice.edit}
-            </button>
-            <button
+            />
+            <Button
               type="button"
+              label={t.voice.discard}
+              variant="ghost"
+              size="sm"
+              icon={<X className="w-3.5 h-3.5" aria-hidden="true" />}
               onClick={discard}
-              className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md border border-border bg-background text-xs font-medium text-destructive hover:bg-destructive/10"
               data-testid="voice-preview-discard"
-            >
-              <X className="w-3.5 h-3.5" aria-hidden="true" />
-              {t.voice.discard}
-            </button>
+            />
           </div>
         </div>
       )}

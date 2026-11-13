@@ -85,6 +85,20 @@ let webpackConfig = {
     },
     configure: (webpackConfig) => {
 
+      // Astryx tryout: react-scripts 5 ships an old cssnano/postcss-calc
+      // in its CssMinimizerPlugin that cannot parse Astryx's modern
+      // calc() (min(calc(...)) with var() fallbacks and env()), so a
+      // CI=true production build fails at the CSS-minify step. Drop the
+      // CSS minimizer and keep JS minification (Terser). The emitted CSS
+      // stays unminified but valid; the bundle grows a little. This is
+      // the minimal fix for the tryout branch — a cssnano upgrade is a
+      // separate, bigger change (react-scripts pins it).
+      if (webpackConfig.optimization && Array.isArray(webpackConfig.optimization.minimizer)) {
+        webpackConfig.optimization.minimizer = webpackConfig.optimization.minimizer.filter(
+          (plugin) => plugin && plugin.constructor && plugin.constructor.name !== "CssMinimizerPlugin"
+        );
+      }
+
       // Add ignored patterns to reduce watched directories
         webpackConfig.watchOptions = {
           ...webpackConfig.watchOptions,
